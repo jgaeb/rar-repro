@@ -428,7 +428,7 @@ p_comparison_base <- bind_rows(di_raw, di_ks, di_rar_base) %>%
     type,
     levels = c("Raw disparity", "Kitchen sink", "Risk-adjusted")
   )) %>%
-  ggplot(aes(x = term, y = estimate)) +
+  ggplot(aes(x = term, y = estimate, color = type, shape = type)) +
   geom_point() +
   xlab(NULL) +
   scale_y_continuous(
@@ -437,14 +437,22 @@ p_comparison_base <- bind_rows(di_raw, di_ks, di_rar_base) %>%
     expand = c(0, 0),
     labels = label_percent(1)
   ) +
-  facet_wrap("type")
+  scale_color_discrete(NULL) +
+  scale_shape_discrete(NULL) +
+  guides(color = guide_legend(ncol = 3), shape = guide_legend(ncol = 3)) +
+  theme(
+    legend.position = "bottom",
+    legend.key.size = unit(0.3, "lines"),
+    legend.spacing = unit(0, "pt"),
+    legend.text = element_text(size = 6)
+  )
 
 p_comparison_rb <- bind_rows(di_raw, di_ks, di_rar_rb) %>%
   mutate(type = factor(
     type,
     levels = c("Raw disparity", "Kitchen sink", "Risk-adjusted")
   )) %>%
-  ggplot(aes(x = term, y = estimate)) +
+  ggplot(aes(x = term, y = estimate, color = type, shape = type)) +
   geom_point() +
   xlab(NULL) +
   scale_y_continuous(
@@ -453,21 +461,29 @@ p_comparison_rb <- bind_rows(di_raw, di_ks, di_rar_rb) %>%
     expand = c(0, 0),
     labels = label_percent(1)
   ) +
-  facet_wrap("type")
+  scale_color_discrete(NULL) +
+  scale_shape_discrete(NULL) +
+  guides(color = guide_legend(ncol = 3), shape = guide_legend(ncol = 3)) +
+  theme(
+    legend.position = "bottom",
+    legend.key.size = unit(0.3, "lines"),
+    legend.spacing = unit(0, "pt"),
+    legend.text = element_text(size = 6)
+  )
 
 ggsave(
   path("figures", "comparison_base.pdf"),
   plot = p_comparison_base,
-  width = rect_width,
-  height = rect_height,
+  width = square_height,
+  height = square_width,
   device = cairo_pdf
 )
 
 ggsave(
   path("figures", "comparison_rb.pdf"),
   plot = p_comparison_rb,
-  width = rect_width,
-  height = rect_height,
+  width = square_width,
+  height = square_height,
   device = cairo_pdf
 )
 
