@@ -1,8 +1,18 @@
 Risk-Adjusted Regression
 ---
 
-Data and replication code for Jung et al. (2023)
-["Mitigating Included- and Omitted-Variable Bias in Estimates of Disparate Impact"](https://arxiv.org/abs/1809.05651).
+Data and replication code for Jung et al. (2026)
+["Measuring Disparate Impact in Human and Machine Decisions"](https://doi.org/10.1073/pnas.2509765122).
+
+## Citation
+
+J. Jung, S. Corbett-Davies, J.D. Gaebler, R. Shroff,  & S. Goel,  Measuring
+disparate impact in human and machine decisions, Proc. Natl. Acad. Sci. U.S.A.
+123 (30) e2509765122,
+[https://doi.org/10.1073/pnas.2509765122](https://doi.org/10.1073/pnas.2509765122)
+(2026).
+
+## Instructions
 
 For reproducibility, these replication materials use the
 [`groundhog` package](https://groundhogr.com), which can be installed from CRAN:

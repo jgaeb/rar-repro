@@ -1,3 +1,4 @@
+library(ragg)
 library(groundhog)
 pkgs <- c(
   "fs",
@@ -7,6 +8,7 @@ pkgs <- c(
   "tidymodels",
   "tidyverse"
 )
+
 groundhog.library(pkgs, "2024-01-22")
 
 #################################### SETUP #####################################

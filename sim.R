@@ -125,7 +125,7 @@ d_sim <- testing(d) %>%
   drop_na()
 
 # Define the simulation function
-sim <- function(n = 1e6, m = 100) {
+sim <- function(n = 1e5, m = 100) {
   # Noise the model coefficients
   m_frisk <- m_sim_frisk
   m_frisk$fit$coefficients <- m_frisk$fit$coefficients +
@@ -134,7 +134,7 @@ sim <- function(n = 1e6, m = 100) {
   m_weap$fit$coefficients <- m_weap$fit$coefficients +
     rnorm(length(m_weap$fit$coefficients), 0, 1/50)
 
-  # Sample 1,000,000 rows (with replacement), apply the models, and realize the
+  # Sample 100,000 rows (with replacement), apply the models, and realize the
   # outcomes.
   df <- slice_sample(d_sim, n = n, replace = TRUE) %>%
     mutate(
@@ -195,6 +195,16 @@ sim <- function(n = 1e6, m = 100) {
     left_join(estimand, by = "race")
 }
 
-# Run 1000 iterations of the simulation; then, plot the results.
-map_dfr(seq(100), ~sim()) %>%
+# Function to run sim() until it succeeds
+safe_sim <- function() {
+  repeat {
+    result <- try(sim(), silent = TRUE)
+    if (!inherits(result, "try-error")) {
+      return(result)
+    }
+  }
+}
+
+# Run 100 iterations of the simulation; then, plot the results.
+map_dfr(seq(100), \(x) safe_sim(), .progress = "Simulation") %>%
   write_rds(path("data", "sim.rds"), compress = "gz")
